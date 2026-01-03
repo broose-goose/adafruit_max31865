@@ -1,0 +1,18 @@
+[package]
+name = "adafruit_max31865"
+version = "0.1.0"
+edition = "2024"
+license = "BSD-3-Clause"
+description = "MAX31865 RTD-to-digital converter driver (embedded-hal + embedded-hal-async)"
+categories = ["embedded", "no-std"]
+keywords = ["max31865", "rtd", "pt100", "pt1000", "embedded-hal"]
+
+[dependencies]
+embedded-hal = "1.0"
+embedded-hal-async = { version = "1.0", optional = true }
+bitflags = "2.10.0"
+libm = "0.2"
+
+[features]
+default = []
+async = ["dep:embedded-hal-async"]
