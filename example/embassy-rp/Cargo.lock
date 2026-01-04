@@ -3,6 +3,35 @@
 version = 4
 
 [[package]]
+name = "adafruit_max31865"
+version = "0.1.0"
+dependencies = [
+ "bitflags 2.10.0",
+ "embedded-hal 1.0.0",
+ "embedded-hal-async",
+ "libm",
+]
+
+[[package]]
+name = "adafruit_max31865_embassy_rp"
+version = "0.1.0"
+dependencies = [
+ "adafruit_max31865",
+ "cortex-m",
+ "cortex-m-rt",
+ "defmt",
+ "defmt-rtt",
+ "embassy-embedded-hal",
+ "embassy-executor",
+ "embassy-rp",
+ "embassy-time",
+ "embedded-hal 1.0.0",
+ "embedded-hal-async",
+ "embedded-hal-bus",
+ "panic-probe",
+]
+
+[[package]]
 name = "aho-corasick"
 version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -735,35 +764,6 @@ name = "log"
 version = "0.4.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e5032e24019045c762d3c0f28f5b6b8bbf38563a65908389bf7978758920897"
-
-[[package]]
-name = "max31865"
-version = "0.1.0"
-dependencies = [
- "bitflags 2.10.0",
- "embedded-hal 1.0.0",
- "embedded-hal-async",
- "libm",
-]
-
-[[package]]
-name = "max31865-embassy-rp"
-version = "0.1.0"
-dependencies = [
- "cortex-m",
- "cortex-m-rt",
- "defmt",
- "defmt-rtt",
- "embassy-embedded-hal",
- "embassy-executor",
- "embassy-rp",
- "embassy-time",
- "embedded-hal 1.0.0",
- "embedded-hal-async",
- "embedded-hal-bus",
- "max31865",
- "panic-probe",
-]
 
 [[package]]
 name = "memchr"

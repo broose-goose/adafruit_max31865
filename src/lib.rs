@@ -161,7 +161,9 @@ where
         Ok(())
     }
 
-    pub fn read_fault(&mut self, cycle: FaultCycle) -> Result<FaultStatus, Error<SPI::Error>> {
+    pub async fn read_fault<D: embedded_hal_async::delay::DelayNs>(
+        &mut self, cycle: FaultCycle, delay: &mut D
+    ) -> Result<FaultStatus, Error<SPI::Error>> {
         if cycle != FaultCycle::None {
             let mut cfg_reg = self.read_u8(MAX31865_CONFIG_REG)?;
             cfg_reg &= 0x11; // keep wire + filter bits, same as Adafruit
@@ -169,7 +171,7 @@ where
             match cycle {
                 FaultCycle::Auto => {
                     self.write_u8(MAX31865_CONFIG_REG, cfg_reg | 0b1000_0100)?;
-                    // caller can delay externally if desired; Adafruit does delay(1ms)
+                    delay.delay_ms(1).await;
                 }
                 FaultCycle::ManualRun => {
                     self.write_u8(MAX31865_CONFIG_REG, cfg_reg | 0b1000_1000)?;
@@ -438,7 +440,9 @@ where
         ))
     }
 
-    pub async fn read_fault(&mut self, cycle: FaultCycle) -> Result<FaultStatus, Error<SPI::Error>> {
+    pub async fn read_fault<D: embedded_hal_async::delay::DelayNs>(
+        &mut self, cycle: FaultCycle, delay: &mut D
+    ) -> Result<FaultStatus, Error<SPI::Error>> {
         if cycle != FaultCycle::None {
             let mut cfg_reg = self.read_u8(MAX31865_CONFIG_REG).await?;
             cfg_reg &= 0x11;
@@ -446,6 +450,7 @@ where
             match cycle {
                 FaultCycle::Auto => {
                     self.write_u8(MAX31865_CONFIG_REG, cfg_reg | 0b1000_0100).await?;
+                    delay.delay_ms(1).await;
                 }
                 FaultCycle::ManualRun => {
                     self.write_u8(MAX31865_CONFIG_REG, cfg_reg | 0b1000_1000).await?;
